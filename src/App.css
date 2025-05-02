@@ -1,35 +1,126 @@
-.rounded-container {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.bg-primary {
-  background-color: #0958d9;
-}
-
 .text-primary {
-  color: #0958d9;
+  color: #3f8efc;
 }
 
-.bg-secondary {
-  background-color: #4096ff;
+.text-secondary {
+  color: #87bfff;
+}
+
+.text-accent {
+  color: #add7f6;
 }
 
 .text-white {
   color: white;
 }
 
-.text-bold {
-  font-weight: bold;
+.text-black {
+  color: black;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.lato-thin {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lato-bold {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-thin-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.lato-light-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lato-bold-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.lato-black-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.rounded-container {
+  border-radius: 16px;
+}
+
+.image-netflix {
+  background-image: url("./img/netflix-logo.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.image-disney {
+  background-image: url("./img/disneyplus-logo.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.image-prime {
+  background-image: url("./img/prime-video-logo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-primary {
+  background-color: #3f8efc;
+}
+
+.bg-secondary {
+  background-color: #87bfff;
+}
+
+.bg-accent {
+  background-color: #add7f6;
 }
 
 .bg-gray {
-  background-color: #f3ede0;
-}
-
-.carousel-content {
-  height: 400px;
-  text-align: center;
+  background-color: #2f2f2f;
 }
 
 .fullh {
@@ -56,4 +147,46 @@
 
 .button-login {
   padding-block: 10px;
+}
+
+.carousel-container {
+  height: 400px;
+  align-items: center;
+  padding-inline: 20px;
+}
+
+.carousel-content-container {
+  justify-items: center;
+}
+
+.carousel-content {
+  width: 230px;
+  height: 300px;
+  border-radius: 20px;
+}
+.carousel-content-container .carousel-content {
+  border: 0;
+}
+
+.carousel-content .ant-card-body {
+  padding: 0 !important;
+}
+
+.carousel-content-top {
+  width: 230px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 100px;
+}
+
+.text-modal-container {
+  justify-content: center;
+}
+
+.ant-timeline-item.ant-timeline-item-last {
+  padding: 0 !important;
+}
+
+.ant-modal-content .ant-card-body {
+  padding-bottom: 0 !important;
 }
