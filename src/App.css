@@ -1,38 +1,59 @@
-.App {
-  text-align: center;
+.rounded-container {
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.bg-primary {
+  background-color: #0958d9;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.text-primary {
+  color: #0958d9;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.bg-secondary {
+  background-color: #4096ff;
+}
+
+.text-white {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.text-bold {
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bg-gray {
+  background-color: #f3ede0;
+}
+
+.carousel-content {
+  height: 400px;
+  text-align: center;
+}
+
+.fullh {
+  height: 100vh;
+}
+
+.fullw {
+  width: 100vw;
+}
+
+.container-login {
+  height: 500px;
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
+}
+
+.gradient-bottom {
+  background: linear-gradient(to bottom, #4096ff, #0958d9);
+}
+
+.gradient-right {
+  background: linear-gradient(to right, #4096ff, #0958d9);
+}
+
+.button-login {
+  padding-block: 10px;
 }
