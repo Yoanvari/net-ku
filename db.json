@@ -3,7 +3,77 @@
     {
       "id": 1,
       "name": "John Doe",
-      "email": "johndoe@net.com"
+      "email": "johndoe@netku.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "yoan",
+      "email": "yoan@netku.com",
+      "password": "123456",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "name": "vari",
+      "email": "vari@netku.com",
+      "password": "123456",
+      "role": "user"
+    }
+  ],
+  "paketData": [
+    {
+      "id": 1,
+      "namaProvider": "Telkomsel",
+      "namaPaket": "MAXstream Gala 20GB",
+      "kuota": "20 GB",
+      "harga": 85000,
+      "masaAktif": "30 Hari",
+      "jenis": "Internet + Hiburan",
+      "kuotaUtama": "10 GB",
+      "kuotaApp": {
+        "MAXstream": "10 GB",
+        "Netflix": "Included (via MAXstream)"
+      },
+      "aksesAplikasi": ["MAXstream", "Netflix", "VIU", "Disney+ Hotstar"],
+      "deskripsi": "Paket data Telkomsel dengan kuota MAXstream untuk Netflix dan aplikasi hiburan lainnya.",
+      "gambar": "https://example.com/images/telkomsel-maxstream20.jpg"
+    },
+    {
+      "id": 2,
+      "namaProvider": "Indosat Ooredoo",
+      "namaPaket": "Freedom Apps 12GB",
+      "kuota": "12 GB",
+      "harga": 60000,
+      "masaAktif": "30 Hari",
+      "jenis": "Internet + Aplikasi Sosial",
+      "kuotaUtama": "6 GB",
+      "kuotaApp": {
+        "TikTok": "3 GB",
+        "Instagram": "3 GB"
+      },
+      "aksesAplikasi": ["Instagram", "TikTok", "Facebook", "Twitter"],
+      "deskripsi": "Paket internet dengan kuota utama dan kuota aplikasi media sosial.",
+      "gambar": "https://example.com/images/indosat-freedomapps12.jpg"
+    },
+    {
+      "id": 3,
+      "namaProvider": "XL Axiata",
+      "namaPaket": "Combo VIP Entertainment 25GB",
+      "kuota": "25 GB",
+      "harga": 95000,
+      "masaAktif": "30 Hari",
+      "jenis": "Internet + Hiburan + Sosial",
+      "kuotaUtama": "15 GB",
+      "kuotaApp": {
+        "YouTube": "5 GB",
+        "Netflix": "3 GB",
+        "Spotify": "2 GB"
+      },
+      "aksesAplikasi": ["YouTube", "Netflix", "Spotify", "TikTok"],
+      "deskripsi": "Kombinasi kuota utama dan aplikasi hiburan favorit.",
+      "gambar": "https://example.com/images/xl-combo-entertainment25.jpg"
     }
   ]
 }
