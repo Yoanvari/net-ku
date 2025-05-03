@@ -14,6 +14,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/transaksi/:id" element={<Transaksi />} />
       </Routes>
     </BrowserRouter>
   );

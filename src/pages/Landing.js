@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   FloatButton,
@@ -17,6 +17,11 @@ import {
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
+import { getRegularPackage } from "../api/packageApi";
+import RegularPackageCard from "../components/RegularPackageCard";
+import { getStreamingPackage } from "../api/packageApi";
+import StreamingPackageCard from "../components/StreamingPackageCard";
 const { Header, Footer, Content } = Layout;
 const { Text } = Typography;
 const headerStyle = {
@@ -53,16 +58,54 @@ const Landing = () => {
   const onChange = (key) => {
     console.log(key);
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
+  const navigate = useNavigate();
+  const [regularPackages, setRegularPackages] = useState([]);
+  const [streamingPackages, setStreamingPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const data = await getRegularPackage();
+        console.log(data);
+        setRegularPackages(data);
+      } catch (error) {
+        console.error("Error fetching regular packages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPackages();
+  }, []);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const data = await getStreamingPackage();
+        console.log(data);
+        setStreamingPackages(data);
+      } catch (error) {
+        console.error("Error fetching regular packages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPackages();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const chunkArray = (array, size) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
+  const divPackages = chunkArray(regularPackages, 4);
 
   return (
     <Layout style={layoutStyle}>
@@ -175,142 +218,38 @@ const Landing = () => {
           style={{ marginBlock: 40, paddingInline: 30 }}
         >
           {/* netflix */}
-          <Card
-            variant="borderless"
-            hoverable
-            className="bg-secondary"
-            style={{
-              width: 400,
-              borderRadius: 20,
-            }}
-            onClick={showModal}
-          >
-            <Space direction="vertical" size={20} style={{ width: "100%" }}>
-              <div
-                className="rounded-container bg-primary text-white lato-black"
-                style={{
-                  height: "60px",
-                  textAlign: "center",
-                  alignContent: "center",
-                  fontSize: "20px",
-                  letterSpacing: "1px",
-                }}
-              >
-                Unlimited Streaming Plan
-              </div>
-              <div
-                className="rounded-container image-netflix"
-                style={{ height: "180px", backgroundColor: "gray" }}
-              ></div>
-            </Space>
-          </Card>
-          <Modal
-            title="Detail plan"
-            open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <Flex
-              justify="space-between"
-              className="lato-bold"
-              style={{ marginBlock: 20 }}
-            >
-              <Text>Unlimited | 30 days</Text>
-              <Text>Rp.160.000</Text>
-            </Flex>
-            <Flex style={{ marginBlock: 10 }}>
-              <Tag>Unlimited</Tag>
-              <Tag>Streaming</Tag>
-              <Tag>netflix</Tag>
-            </Flex>
-            <Card style={{ paddingBlockEnd: 0 }}>
-              <Flex justify="space-between">
-                <Text>Active Periode</Text>
-                <Text>30 days</Text>
-              </Flex>
-              <Divider style={{ marginBlock: 10 }} />
-              <Flex justify="space-between">
-                <Text>Speed</Text>
-                <Text>Up to 10 Mbps</Text>
-              </Flex>
-              <Divider style={{ marginBlock: 10 }} />
-              <Flex justify="space-between">
-                <Text>Bonus</Text>
-                <Text>2 GB Regular Data</Text>
-              </Flex>
-              <Divider style={{ marginBlock: 10 }} />
-              <Flex vertical>
-                <Text style={{ marginBlockEnd: 15 }}>Features:</Text>
-                <Timeline
-                  style={{ marginInlineStart: 10 }}
-                  items={[
-                    { children: "Unlimited access to Netflix" },
-                    { children: "HD & 4K supported" },
-                    { children: "Multi-device streaming" },
-                    { children: "Ad-free experience" },
-                    { children: "Free access to selected movie channels" },
-                  ]}
-                />
-              </Flex>
-            </Card>
-          </Modal>
+          <StreamingPackageCard
+            title={"Unlimited Netflix Plan"}
+            quota={"2 GB"}
+            type={"Streaming"}
+            price={"Rp160000"}
+            duration={"30 days"}
+            quotaApp={"Unlimited"}
+            app={"Netflix"}
+            imageClassName={"image-netflix"}
+          />
           {/* disney */}
-          <Card
-            variant="borderless"
-            hoverable
-            className="bg-secondary"
-            style={{
-              width: 400,
-              borderRadius: 20,
-            }}
-          >
-            <Space direction="vertical" size={20} style={{ width: "100%" }}>
-              <div
-                className="rounded-container bg-primary text-white lato-black"
-                style={{
-                  height: "60px",
-                  textAlign: "center",
-                  alignContent: "center",
-                  fontSize: "20px",
-                  letterSpacing: "1px",
-                }}
-              >
-                Unlimited Streaming Plan
-              </div>
-              <div
-                className="rounded-container image-disney"
-                style={{ height: "180px", backgroundColor: "gray" }}
-              ></div>
-            </Space>
-          </Card>
-          <Card
-            hoverable
-            variant="borderless"
-            className="bg-secondary"
-            style={{
-              width: 400,
-              borderRadius: 20,
-            }}
-          >
-            <Space direction="vertical" size={20} style={{ width: "100%" }}>
-              <div
-                className="rounded-container bg-primary text-white lato-black"
-                style={{
-                  height: "60px",
-                  textAlign: "center",
-                  alignContent: "center",
-                  fontSize: "20px",
-                  letterSpacing: "1px",
-                }}
-              >
-                Unlimited Streaming Plan
-              </div>
-              <div
-                className="rounded-container image-prime"
-                style={{ height: "180px", backgroundColor: "gray" }}
-              ></div>
-            </Space>
-          </Card>
+          <StreamingPackageCard
+            title={"Unlimited Disney Plan"}
+            quota={"2 GB"}
+            type={"Streaming"}
+            price={"Rp160000"}
+            duration={"30 days"}
+            quotaApp={"Unlimited"}
+            app={"Disney"}
+            imageClassName={"image-disney"}
+          />
+          {/* Prime */}
+          <StreamingPackageCard
+            title={"Unlimited Prime Plan"}
+            quota={"2 GB"}
+            type={"Streaming"}
+            price={"Rp160000"}
+            duration={"30 days"}
+            quotaApp={"Unlimited"}
+            app={"Prime"}
+            imageClassName={"image-prime"}
+          />
         </Flex>
         {/* caraousel */}
         <Row
@@ -358,394 +297,27 @@ const Landing = () => {
               autoplay={{ dotDuration: true }}
               autoplaySpeed={5000}
             >
-              <div>
-                <Row className="carousel-container">
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
+              {divPackages.map((group, Index) => (
+                <div key={Index}>
+                  <Row className="carousel-container">
+                    {group.map((pkg) => (
+                      <Col
+                        span={6}
+                        className="carousel-content-container"
+                        key={pkg.id}
                       >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
-                      >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
-                      >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
-                      >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                </Row>
-              </div>
-              <div>
-                <Row className="carousel-container">
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
-                      >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={6} className="carousel-content-container">
-                    <Card hoverable className="carousel-content">
-                      <Flex
-                        className="bg-secondary carousel-content-top"
-                        align="center"
-                        justify="space-between"
-                        vertical
-                      >
-                        <Text
-                          className="lato-bold"
-                          style={{ paddingBlockStart: 20 }}
-                        >
-                          Serba Lima Ribu
-                        </Text>
-                        <Text
-                          className="lato-black"
-                          style={{ paddingBlockEnd: 10, fontSize: "23px" }}
-                        >
-                          Up to 5 GB
-                        </Text>
-                      </Flex>
-                      <div
-                        style={{
-                          paddingInline: 10,
-                          paddingBlockStart: 10,
-                          width: "100%",
-                        }}
-                      >
-                        <Flex
-                          justify="space-between"
-                          style={{ paddingBlockEnd: 20 }}
-                          className="lato-bold"
-                        >
-                          <Text>Internet</Text>
-                          <Text>5 GB</Text>
-                        </Flex>
-                        <Flex
-                          justify="space-between"
-                          className="lato-bold"
-                          style={{ paddingBlockEnd: 20 }}
-                        >
-                          <Text>Active Period</Text>
-                          <Text>30 days</Text>
-                        </Flex>
-                        <Text
-                          className="text-primary lato-black"
-                          style={{ fontSize: "20px" }}
-                        >
-                          Rp5.000
-                        </Text>
-                      </div>
-                      <Flex style={{ padding: 10, paddingBlockStart: 15 }}>
-                        <Button
-                          block
-                          type="primary"
-                          shape="round"
-                          className="lato-bold"
-                        >
-                          Buy
-                        </Button>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={6} className="carousel-content-container"></Col>
-                  <Col span={6} className="carousel-content-container"></Col>
-                </Row>
-              </div>
+                        <RegularPackageCard
+                          title={pkg.namePackage}
+                          quota={pkg.quota}
+                          duration={pkg.duration}
+                          price={pkg.price}
+                          onBuy={() => navigate("/transaksi/" + pkg.id)}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
+              ))}
             </Carousel>
           </Col>
         </Row>
