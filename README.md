@@ -1,7 +1,24 @@
-### Jalankan Fronten
+## Installation
 
-    npm install
+### Clone this repository
 
-### waktu mulai dan selesai pengerjaan
+    https://github.com/Yoanvari/net-ku.git
 
-    01-05-2025 15:00 - 03-05-2025 ?
+### Go to the directory
+
+    cd netku
+
+### Install the dependencies
+
+    npm istall
+
+## Dummy Login Credentials
+
+### User
+
+- Email: yoan@netku.com
+- Password: 123456
+
+## waktu mulai dan selesai pengerjaan
+
+    01-05-2025 15:00 - 03-05-2025 14:00
